@@ -2,9 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    serverActions: true,
-  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.ttf$/,

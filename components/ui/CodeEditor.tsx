@@ -84,7 +84,7 @@ export function CodeEditor({ code, onChange, readOnly = false, language = 'types
           suggestOnTriggerCharacters: false,
           acceptSuggestionOnCommitCharacter: false,
           tabCompletion: 'off',
-          wordBasedSuggestions: false,
+          wordBasedSuggestions: 'off',
         });
 
         monacoRef.current = editor;
