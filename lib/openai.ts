@@ -53,7 +53,7 @@ export async function makeCompletion(request: LLMRequest): Promise<LLMResponse> 
     const client = getClient();
 
     const response = await client.chat.completions.create({
-      model: 'gpt-4-turbo-preview', // or 'gpt-4' or 'gpt-3.5-turbo'
+      model: 'openai/gpt-4-turbo-preview', // OpenRouter format
       messages: [
         {
           role: 'system',
@@ -102,7 +102,7 @@ export async function* makeStreamingCompletion(
     const client = getClient();
 
     const stream = await client.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
+      model: 'openai/gpt-4-turbo-preview',
       messages: [
         {
           role: 'system',
