@@ -28,14 +28,12 @@ export function CodeEditor({ code, onChange, readOnly = false, language = 'types
 
     const initMonaco = async () => {
       try {
-        // Configure Monaco Environment for web workers
+        // Disable Monaco web workers to avoid production build issues
+        // This runs Monaco in the main thread (acceptable for this use case)
         if (typeof window !== 'undefined') {
           (window as any).MonacoEnvironment = {
-            getWorker(_: any, label: string) {
-              return new Worker(
-                new URL('monaco-editor/esm/vs/editor/editor.worker.js', import.meta.url),
-                { type: 'module' }
-              );
+            getWorker() {
+              return null; // Disable workers - run in main thread
             },
           };
         }
