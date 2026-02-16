@@ -13,6 +13,7 @@ let openaiClient: OpenAI | null = null;
 function getClient(): OpenAI {
   if (!openaiClient) {
     const apiKey = process.env.OPENAI_API_KEY;
+    const baseURL = process.env.OPENAI_BASE_URL;
     
     if (!apiKey) {
       throw new Error('OPENAI_API_KEY environment variable is not set');
@@ -20,6 +21,7 @@ function getClient(): OpenAI {
 
     openaiClient = new OpenAI({
       apiKey,
+      baseURL: baseURL || 'https://api.openai.com/v1', // Default to OpenAI if not set
     });
   }
 
