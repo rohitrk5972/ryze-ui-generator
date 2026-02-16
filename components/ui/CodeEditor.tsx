@@ -41,6 +41,10 @@ export function CodeEditor({ code, onChange, readOnly = false, language = 'types
         // Using dynamic import for Monaco
         const monaco = await import('monaco-editor');
         
+        // Disable all language features that require workers
+        monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
+        monaco.languages.typescript.javascriptDefaults.setEagerModelSync(true);
+        
         // Configure Monaco
         monaco.editor.defineTheme('ryze-theme', {
           base: 'vs',
@@ -74,6 +78,13 @@ export function CodeEditor({ code, onChange, readOnly = false, language = 'types
           folding: true,
           lineDecorationsWidth: 10,
           lineNumbersMinChars: 3,
+          // Disable features that require workers
+          quickSuggestions: false,
+          parameterHints: { enabled: false },
+          suggestOnTriggerCharacters: false,
+          acceptSuggestionOnCommitCharacter: false,
+          tabCompletion: 'off',
+          wordBasedSuggestions: false,
         });
 
         monacoRef.current = editor;
