@@ -28,6 +28,18 @@ export function CodeEditor({ code, onChange, readOnly = false, language = 'types
 
     const initMonaco = async () => {
       try {
+        // Configure Monaco Environment for web workers
+        if (typeof window !== 'undefined') {
+          (window as any).MonacoEnvironment = {
+            getWorker(_: any, label: string) {
+              return new Worker(
+                new URL('monaco-editor/esm/vs/editor/editor.worker.js', import.meta.url),
+                { type: 'module' }
+              );
+            },
+          };
+        }
+
         // Using dynamic import for Monaco
         const monaco = await import('monaco-editor');
         
