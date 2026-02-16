@@ -28,22 +28,27 @@ export function CodeEditor({ code, onChange, readOnly = false, language = 'types
 
     const initMonaco = async () => {
       try {
-        // Disable Monaco web workers to avoid production build issues
-        // This runs Monaco in the main thread (acceptable for this use case)
+        // Completely disable Monaco web workers
         if (typeof window !== 'undefined') {
-          (window as any).MonacoEnvironment = {
-            getWorker() {
-              return null; // Disable workers - run in main thread
-            },
+          (self as any).MonacoEnvironment = {
+            getWorkerUrl: function () {
+              return 'data:text/javascript;charset=utf-8,' + encodeURIComponent('self.MonacoEnvironment = { baseUrl: "" };');
+            }
           };
         }
 
         // Using dynamic import for Monaco
         const monaco = await import('monaco-editor');
         
-        // Disable all language features that require workers
-        monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
-        monaco.languages.typescript.javascriptDefaults.setEagerModelSync(true);
+        // Disable all language services completely
+        monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+          noSemanticValidation: true,
+          noSyntaxValidation: true,
+        });
+        monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+          noSemanticValidation: true,
+          noSyntaxValidation: true,
+        });
         
         // Configure Monaco
         monaco.editor.defineTheme('ryze-theme', {
