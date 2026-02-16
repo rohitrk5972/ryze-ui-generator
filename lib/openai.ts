@@ -65,7 +65,7 @@ export async function makeCompletion(request: LLMRequest): Promise<LLMResponse> 
         },
       ],
       temperature: request.temperature ?? 0.7,
-      max_tokens: request.maxTokens ?? 2000,
+      max_tokens: request.maxTokens ?? 1000,
       response_format: request.responseFormat === 'json' 
         ? { type: 'json_object' }
         : undefined,
@@ -114,7 +114,7 @@ export async function* makeStreamingCompletion(
         },
       ],
       temperature: request.temperature ?? 0.7,
-      max_tokens: request.maxTokens ?? 2000,
+      max_tokens: request.maxTokens ?? 1000,
       stream: true,
     });
 
