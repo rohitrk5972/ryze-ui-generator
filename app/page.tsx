@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import { ChatPanel } from '@/components/ui/ChatPanel';
 import { CodeEditor } from '@/components/ui/CodeEditor';
 import { LivePreview } from '@/components/ui/LivePreview';
 import { ChatMessage, AgentResponse } from '@/lib/types';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, LogOut } from 'lucide-react';
 
 export default function Home() {
+  const { data: session } = useSession();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentCode, setCurrentCode] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -145,6 +147,23 @@ export default function Home() {
                 {versions.length} version{versions.length !== 1 ? 's' : ''}
               </div>
             )}
+
+            {/* User info & Sign out */}
+            <div className="flex items-center gap-2 pl-4 border-l border-gray-200">
+              {session?.user?.email && (
+                <span className="text-sm text-gray-600 hidden sm:inline">
+                  {session.user.email}
+                </span>
+              )}
+              <button
+                onClick={() => signOut({ callbackUrl: '/login' })}
+                title="Sign out"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">Sign out</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
