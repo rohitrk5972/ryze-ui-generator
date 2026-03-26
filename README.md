@@ -13,6 +13,7 @@ Transform natural language descriptions into working, production-ready UI code u
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
+- [How It Will Work](#-how-it-will-work)
 - [Live Demo](#-live-demo)
 - [Key Features](#-key-features)
 - [Architecture](#-architecture)
@@ -48,6 +49,19 @@ Users can:
 ✅ NO inline styles or custom CSS  
 ✅ NO new components creation  
 ✅ Ensures reproducibility and safety
+
+---
+
+## 🧭 How It Will Work
+
+1. **You describe the UI** in the chat panel (e.g., “Create a billing dashboard with a sidebar and stats cards”).
+2. The **Planner agent** interprets the request and picks a layout plus components from the fixed library.
+3. The **Generator agent** produces React/TypeScript code that only uses the whitelisted components and no inline styles.
+4. The **Explainer agent** returns a concise summary of why each component/configuration was chosen.
+5. The code is **rendered live** in the preview pane with desktop/tablet/mobile viewports and saved as a new version.
+6. You can **iterate safely**: request modifications, edit code directly, or roll back to any previous version.
+
+This loop keeps outputs deterministic, explainable, and immediately visible.
 
 ---
 
